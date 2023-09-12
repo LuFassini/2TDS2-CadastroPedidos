@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/style.css">
+    <title>Cadastro de Pedidos</title>
+</head>
+<body>
+    <h2>Cadastro de Pedidos</h2>
+
+    <div>
+        <label for=""></label>
+        <input id="nomedocliente" type="text" placeholder="Cliente">
+
+        <label for=""></label>
+        <input id="mesa" type="number" placeholder="Mesa">
+
+        <label for=""></label>
+        <input id="descricao" type="number" placeholder="Descriçãõ">
+    </div>
+
+    <button id="botaoCadastrar" onclick=" criarPedido()"> Cadastrar </button>
+    <button id="botaoEditar" class="hidden" onclick="editarPedido()"> Editar </button>
+
+
+    <div id="listarPedidos"></div>
+    <div id="listarPedidoUnico"></div>
+
+    <script src="../12-Cadastro de Pedidos/assets/script.js"></script>
+</body>
+</html>
