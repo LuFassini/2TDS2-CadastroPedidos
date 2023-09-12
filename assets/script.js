@@ -1,5 +1,18 @@
-//alert("testando!");
 
+
+function verificarInputs() {
+    let cliente = document.getElementById("nomedocliente").value;
+    let mesa = document.getElementById("mesa").value;
+    let descricao = document.getElementById("descricao").value;
+
+    if (cliente == "" || mesa == "" || descricao == "" ) {
+        console.log("Os dados estao vazios");
+        return true;
+    } else {
+        console.log("Os dados nao estao em branco");
+        return false;
+    }
+}
 class pedido{
     constructor(cliente,mesa,descricao){
     this.id = this.gerarId();
@@ -13,12 +26,9 @@ gerarId(){
     return Math.floor(Math.random() * 1000);
 }
 
-//calcularReservas(){
-   // return Math.floor (this.titulares / 2);
-//}
 
-//calcularTotaldeJogadores(){
-   // return this.titulares + this.reservas
+//calcularTotaldePedidos(){
+  // return this.titulares + this.reservas
 //}
 }
 
@@ -26,8 +36,6 @@ class pedidoService {
     constructor(){
         this.pedidos = [];
     }
-    //CRUD = create, read, update ,delete
-    //C = create
     
     adicionarPedido(parametro){
         this.pedidoss.push(parametro);
@@ -35,13 +43,11 @@ class pedidoService {
     listarPedidos(){
         return this.pedidoss;
     }
-    //R=read
+   
     listarPedidosporId(parametro){
         return this.pedidoss.find((pedido) => pedido.id == parametro);
     }
 
-    //U= update
-    //atualizar = EDITAR
     editarpedido(id,cliente,mesa,descricao){
         const pedido = this.listarPedidossporId(id);
 
@@ -51,21 +57,20 @@ class pedidoService {
         //equipe.reservas = equipe.calcularReservas();
         //equipe.totalJogadores = equipe.calcularTotaldeJogadores();
 
-        return equipe;
+        return pedido;
         
     }
 
-    //D= delete
-    deleteEquipe(parametro){
-        return (this.equipes = this.equipes.filter
-            ((equipe) => equipe.id != parametro
+    deletePedido(parametro){
+        return (this.pedidos = this.pedidos.filter
+            ((pedido) => pedido.id != parametro
     ));
 };
 }
 
-const equipeService = new EquipeService();
+const PedidoService = new PedidoService();
 
-function criarEquipe() {
+function criarPedido() {
     const nome = document.getElementById("nomedaequipe").value;
     const titulares = Number (document.getElementById("quantidade").value);
 
