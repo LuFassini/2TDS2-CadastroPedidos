@@ -1,19 +1,13 @@
-
-
 class pedido{
     constructor(cliente,mesa,descricao){
     this.id = this.gerarId();
     this.cliente = cliente;
     this.mesa = mesa;
     this.descricao = descricao;
-    this.totalPedidos = this.calcularTotaldePedidos();
+    
 }
 gerarId(){
     return Math.floor(Math.random() * 1000);
-}
-
-calcularTotaldePedidos(){
-    return this.titulares + this.reservas
 }
 }
 
@@ -26,11 +20,11 @@ class PedidoService {
         this.pedidos.push(parametro);
     }
     listarPedidos(){
-        return this.ped;
+        return this.pedidos;
     }
     
     listarPedidosporId(parametro){
-        return this.equipes.find((equipe) => equipe.id == parametro);
+        return this.pedidos.find((pedido) => pedido.id == parametro);
     }
 
     atualizarPedido(id,cliente,mesa,descricao){
@@ -65,6 +59,15 @@ function criarPedido() {
     
     listarPedidos();
     limparInputs();
+
+    if (verificarInputs()) {
+        sendMSG("Preencha todos os campos!", "error");
+    }  else {
+        const pedido = new Pedido (cliente, mesa, descricao);
+        this.pedidos.push(pedido);
+        sendMSG("Pessoa adicionado ao sistema!", "success");
+        clearInputs();
+    }
    
 }
 
@@ -72,7 +75,7 @@ function listarPedidos (){
     const pedidos = pedidoService.listarPedidos();
 
 
-    const elementoLista = document.getElementById("listarEquipes");
+    const elementoLista = document.getElementById("listarPedidos");
     elementoLista.innerHTML = "";
 
 
@@ -93,8 +96,8 @@ function listarPedidos (){
 
 function listarPedidosporId (id){
     const pedido = pedidoService.listarPedidosporId(id);
-    document.getElementById("listarPedidosUnica").classList.remove("hidden");
-    const elementoLista = document.getElementById("listarEquipeUnica");
+    document.getElementById("listarPedidoUnico").classList.remove("hidden");
+    let elementoLista = document.getElementById("listarPedidoUnico");
     
     elementoLista.innerHTML = "";
 
@@ -110,17 +113,18 @@ function listarPedidosporId (id){
     `;
 
     elementoLista.innerHTML = content;
-    //console.log(equipe);
+    
 }
 
 
 let auxiliar = null;
 
-function atualizarEquipe(id){
-    const equipe = equipeService.listarEquipesporId(id);
+function atualizarPedido(id){
+    const pedido = pedidoService.listarPedidosporId(id);
 
-    document.getElementById("nomedaequipe").value = equipe.nome;
-    document.getElementById("quantidade").value = equipe.titulares;
+    document.getElementById("nomedocliente").value = pedido.cliente;
+    document.getElementById("mesa").value = pedido.mesa;
+    document.getElementById("descricao").value = pedido.descricao;
 
     document.getElementById("botaoCadastrar").classList.add("hidden");
     document.getElementById("botaoEditar").classList.remove("hidden");
@@ -128,30 +132,67 @@ function atualizarEquipe(id){
     auxiliar = id;
 }
 
-function editarEquipe (){
-    const nome = document.getElementById("nomedaequipe").value;
-    const titulares = Number (document.getElementById("quantidade").value);
+function editarPedido (){
+    const cliente = document.getElementById("nomedocliente").value;
+    const mesa = Number (document.getElementById("mesa").value);
+    const descricao = document.getElementById("descricao").value;
 
-    equipeService.atualizarEquipe(auxiliar,nome,titulares);
+    pedidoService.atualizarPedido(auxiliar,cliente,mesa,descricao);
 
-    listarEquipes();
+    listarPedidos();
 
     document.getElementById("botaoCadastrar").classList.remove("hidden");
     document.getElementById("botaoEditar").classList.add("hidden");
-    document.getElementById("listarEquipeUnica").classList.add("hidden");
+    document.getElementById("listarPedidoUnico").classList.add("hidden");
 
     auxiliar = null;
 }
 
 function limparInputs(){
-    document.getElementById("nomedaequipe").value = "";
-    document.getElementById("quantidade").value = "";
+    document.getElementById("nomedocliente").value = "";
+    document.getElementById("mesa").value = "";
+    document.getElementById("descricao").value = "";
 }
 
-function deletarEquipe(id){
-    equipeService.deletarEquipe(id);
+function deletarPedido(id){
+    pedidoService.deletarPedido(id);
 
-    listarEquipes();
+    listarPedidos();
 
-document.getElementById("listarEquipeUnica").classList.add("hidden");
+document.getElementById("listarPedidoUnica").classList.add("hidden");
 }
+
+function verificarInputs() {
+    const cliente = document.getElementById("nomedocliente").value;
+    const mesa = document.getElementById("mesa").value;
+    const descricao = document.getElementById("descricao").value;
+    
+    if (cliente== "" || mesa == "" || descricao == "") {
+        return true;
+    } else {
+        return false;
+    }
+}
+function limparInputsInputs() {
+
+    document.getElementById("nomedocliente").value = '';
+    document.getElementById("mesa").value = '';
+    document.getElementById("descricao").value = '';
+}
+
+function sendMSG(msg, type) {
+
+    const msgDiv = document.getElementById("msg");
+    msgDiv.innerHTML = "";
+
+    const msgP = `
+            <p class="${type}">${msg}</p>
+        `;
+
+    msgDiv.innerHTML += msgP;
+
+    setTimeout(function () {
+        msgDiv.innerHTML = "";
+    }, 3000);
+}
+

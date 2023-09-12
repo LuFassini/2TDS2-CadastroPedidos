@@ -8,11 +8,11 @@
 
 - [x] Testar o link do JS.
 
-Possiveis erros: Caminho do JS errado.
+
 
 - [x] Teste de inputs.
 
-Possiveis erros: Falta de chamado do onclick do botao, ids errados.
+
 
 - [x] Criar classe da equipe com parte dos atributos.
 
@@ -22,7 +22,7 @@ Possiveis erros: Falta de chamado do onclick do botao, ids errados.
 
 - [x] Testar a criaçao de uma nova instancia completa de pedido.
 
-Possiveis erros: Falta de conversao, divergencia de nome da classe, passagem de parametro.
+
 
 - [x] Criar classe de serviços da pedido.
 
@@ -32,7 +32,7 @@ Possiveis erros: Falta de conversao, divergencia de nome da classe, passagem de 
 
 - [x] Testar o metodo de adicionar uma pedido na lista.
 
-Possiveis erros: Falta de conversao, divergencia de nome de instancia, letras minusculas/maiusculas, passagem de parametro.
+
 
 - [x] Metodo para listar as pedidos.
 
@@ -57,6 +57,18 @@ Possiveis erros: Falta de conversao, divergencia de nome de instancia, letras mi
 - [x] criar metodo para atualizar pedido.
 
 - [x] criar funçao para atualizar pedido.
+
+- [x] criar funçao para mensagem de sucesso e erro.
+
+- [x] criar funçao para verificar se os inputs estao preenchidos.
+
+- [x] criar funçao para atualizar pedido.
+
+- [x] criar funçao para limpar inputs.
+
+
+
+
 
 
 
