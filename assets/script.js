@@ -1,66 +1,50 @@
+//alert("testando!");
 
-
-function verificarInputs() {
-    let cliente = document.getElementById("nomedocliente").value;
-    let mesa = document.getElementById("mesa").value;
-    let descricao = document.getElementById("descricao").value;
-
-    if (cliente == "" || mesa == "" || descricao == "" ) {
-        console.log("Os dados estao vazios");
-        return true;
-    } else {
-        console.log("Os dados nao estao em branco");
-        return false;
-    }
-}
 class pedido{
     constructor(cliente,mesa,descricao){
     this.id = this.gerarId();
     this.cliente = cliente;
     this.mesa = mesa;
     this.descricao = descricao;
-    this.reservas = this.calcularReservas();
-    this.totalJogadores = this.calcularTotaldeJogadores();
+    this.totalPedidos = this.calcularTotaldePedidos();
 }
 gerarId(){
     return Math.floor(Math.random() * 1000);
 }
 
-
-//calcularTotaldePedidos(){
-  // return this.titulares + this.reservas
-//}
+ calcularTotaldePedidos(){
+    
+}
 }
 
-class pedidoService {
+class PedidoService {
     constructor(){
         this.pedidos = [];
     }
-    
+
     adicionarPedido(parametro){
-        this.pedidoss.push(parametro);
+        this.pedidos.push(parametro);
     }
     listarPedidos(){
-        return this.pedidoss;
+        return this.pedidos;
     }
-   
     listarPedidosporId(parametro){
-        return this.pedidoss.find((pedido) => pedido.id == parametro);
+        return this.pedidos.find((pedido) => pedido.id == parametro);
     }
 
-    editarpedido(id,cliente,mesa,descricao){
-        const pedido = this.listarPedidossporId(id);
+    atualizarPedido(id,cliente,mesa,descricao){
+        const pedido = this.listarPedidosporId(id);
 
         pedido.cliente = cliente;
         pedido.mesa = mesa;
         pedido.descricao = descricao;
-        //equipe.reservas = equipe.calcularReservas();
-        //equipe.totalJogadores = equipe.calcularTotaldeJogadores();
+        pedido.totalPedidos = pedido.calcularTotaldePedidos();
 
         return pedido;
         
     }
 
+    
     deletePedido(parametro){
         return (this.pedidos = this.pedidos.filter
             ((pedido) => pedido.id != parametro
@@ -68,79 +52,80 @@ class pedidoService {
 };
 }
 
-const PedidoService = new PedidoService();
+const pedidoService = new PedidoService();
 
 function criarPedido() {
-    const nome = document.getElementById("nomedaequipe").value;
-    const titulares = Number (document.getElementById("quantidade").value);
+    const cliente = document.getElementById("nomedocliente").value;
+    const mesa = Number (document.getElementById("mesa").value);
+    const descricao = document.getElementById("descricao").value;
 
-    const novaEquipe = new equipe (nome,titulares);
+    const novoPedido = new pedido (cliente,mesa,descricao);
 
-    equipeService.adicionarEquipe(novaEquipe);
+    pedidoService.adicionarPedido(novoPedido);
     
-    listarEquipes();
+    listarPedidos();
     limparInputs();
    
-    //console.log(equipeService.equipes);
-    //console.log(novaEquipe);
-    //alert("Nome da equipe:" + nome + "nQuantidade de titulares:" + quantidade!);
 }
 
-function listarEquipes (){
-    const equipes = equipeService.listarEquipes();
+function listarPedidos (){
+    const pedidos = pedidoService.listarPedidos();
 
 
-    const elementoLista = document.getElementById("listarEquipes");
+    const elementoLista = document.getElementById("listarPedidos");
     elementoLista.innerHTML = "";
 
 
     let content = "";
     
-    equipes.forEach((equipe) => {
+    pedidos.forEach((pedido) => {
         content += `
-        <div onclick="listarEquipesporId(${equipe.id})">
-        <p>Nome: ${equipe.nome} </p>
+        <div onclick="listarPedidosporId(${pedido.id})">
+        <p>Cliente: ${pedido.cliente} </p>
         </div>
        `;
     });
     
     elementoLista.innerHTML = content;
-    //console.log(equipes);
+    
 }
 
 
 
-function listarEquipesporId (id){
-    const equipe = equipeService.listarEquipesporId(id);
-    document.getElementById("listarEquipeUnica").classList.remove("hidden");
-    const elementoLista = document.getElementById("listarEquipeUnica");
+function listarPedidosporId (id){
+    const pedido = pedidoService.listarPedidosporId(id);
+    document.getElementById("listarPedidoUnico").classList.remove("hidden");
+    const elementoLista = document.getElementById("listarPedidoUnico");
     
     elementoLista.innerHTML = "";
 
     let content = `
     <div>
-        <p>Id: ${equipe.id}</p>
-        <p>Nome: ${equipe.nome}</p>
-        <p>Total de Jogadores: ${equipe.totalJogadores}</p>
-        <p>Titulares: ${equipe.titulares}</p>
-        <p>Reservas: ${equipe.reservas}</p>
-        <button onclick ="atualizarEquipe(${equipe.id})"> Editar </button>
-        <button onclick ="deletarEquipe(${equipe.id})"> Deletar </button>
+        <p>Id: ${pedido.id}</p>
+        <p>Cliente: ${pedido.cliente}</p>
+        <p>Mesa: ${pedido.mesa}</p>
+        <p>Descriçao: ${pedido.descricao}</p>
+        <p>Numero de Pedidos: ${pedido.calcularTotaldePedidos}</p>
+        <button onclick ="atualizarPedido(${pedido.id})"> Editar </button>
+        <button onclick ="deletarPedido(${pedido.id})"> Deletar </button>
     </div>
     `;
 
     elementoLista.innerHTML = content;
-    //console.log(equipe);
+    
+    const contador = totalPedidos.countNumber()
+    document.getElementById("contador").innerHTML = `Total: ${contador}`;
 }
 
 
 let auxiliar = null;
 
-function atualizarEquipe(id){
-    const equipe = equipeService.listarEquipesporId(id);
+function atualizarPedido(id){
+    const pedido = pedidoService.listarPedidosporId(id);
 
-    document.getElementById("nomedaequipe").value = equipe.nome;
-    document.getElementById("quantidade").value = equipe.titulares;
+    document.getElementById("nomedocliente").value = pedido.cliente;
+    document.getElementById("mesa").value = pedido.mesa;
+    document.getElementById("descricao").value = pedido.descricao;
 
     document.getElementById("botaoCadastrar").classList.add("hidden");
     document.getElementById("botaoEditar").classList.remove("hidden");
@@ -148,30 +133,32 @@ function atualizarEquipe(id){
     auxiliar = id;
 }
 
-function editarEquipe (){
-    const nome = document.getElementById("nomedaequipe").value;
-    const titulares = Number (document.getElementById("quantidade").value);
+function editarPedido (){
+    const cliente = document.getElementById("nomedocliente").value;
+    const mesa = Number (document.getElementById("mesa").value);
+    const descricao = document.getElementById("descricao").value;
 
-    equipeService.atualizarEquipe(auxiliar,nome,titulares);
+    pedidoService.atualizarPedido(auxiliar,cliente,mesa,descricao);
 
-    listarEquipes();
+    listarPedidos();
 
     document.getElementById("botaoCadastrar").classList.remove("hidden");
     document.getElementById("botaoEditar").classList.add("hidden");
-    document.getElementById("listarEquipeUnica").classList.add("hidden");
+    document.getElementById("listarPedidoUnica").classList.add("hidden");
 
     auxiliar = null;
 }
 
 function limparInputs(){
-    document.getElementById("nomedaequipe").value = "";
-    document.getElementById("quantidade").value = "";
+    document.getElementById("nomedocliente").value = "";
+    document.getElementById("mesa").value = "";
+    document.getElementById("descricao").value = "";
 }
 
-function deletarEquipe(id){
-    equipeService.deletarEquipe(id);
+function deletarPedido(id){
+    pedidoService.deletarPedido(id);
 
-    listarEquipes();
+    listarPedidos();
 
-document.getElementById("listarEquipeUnica").classList.add("hidden");
+document.getElementById("listarPedidoUnico").classList.add("hidden");
 }
